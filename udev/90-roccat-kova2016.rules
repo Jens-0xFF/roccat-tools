@@ -3,4 +3,4 @@
 # If group roccat does not exist, group root is used.
 
 SUBSYSTEM=="input", KERNEL=="event[0-9]*", ACTION=="add", ATTRS{idVendor}=="1e7d", ATTRS{idProduct}=="2cee|2cef|2cf0", GROUP="roccat", MODE="0660"
-SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ACTION=="add", ATTRS{idVendor}=="1e7d", ATTRS{idProduct}=="2cee|2cef|2cf0", GROUP="roccat", MODE="0660"
+SUBSYSTEM=="hidraw", KERNEL=="hidraw*", ACTION=="add", ATTRS{idVendor}=="1e7d", ATTRS{idProduct}=="2cee|2cef|2cf0|2cf1", GROUP="roccat", MODE="0660"
