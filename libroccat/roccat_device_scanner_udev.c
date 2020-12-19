@@ -41,7 +41,6 @@ struct _RoccatDeviceScannerPrivate {
 };
 
 static gchar const * const hidraw_subsystem = "hidraw";
-static gchar const * const input_subsystem = "input";
 static gchar const * const usb_subsystem = "usb";
 
 static gint get_num_interface(GUdevDevice *device) {

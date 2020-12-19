@@ -28,7 +28,7 @@ typedef struct _RyostklProfileData RyostklProfileData;
 struct _RyostklProfileData {
 	RyostklProfileDataEventhandler eventhandler;
 	RyostklProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 RyostklProfileData *ryostkl_profile_data_new(void);
 RyostklProfileData *ryostkl_profile_data_dup(RyostklProfileData const *other);

@@ -43,8 +43,6 @@ struct _KiroColorFramePrivate {
 
 G_DEFINE_TYPE(KiroColorFrame, kiro_color_frame, GTK_TYPE_FRAME);
 
-static gchar const * const value_key = "value";
-
 void kiro_color_frame_set_from_profile_data(KiroColorFrame *frame, KiroProfileData const *profile_data) {
 	KiroColorFramePrivate *priv = frame->priv;
 	KiroProfile const *profile = &profile_data->hardware.profile;

@@ -79,7 +79,7 @@ static void window_active_page_changed_cb(RoccatConfigWindowPages *roccat_window
 }
 
 static void actual_profile_changed_from_device_cb(DBusGProxy *proxy, guchar profile_number, gpointer user_data) {
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
 }
 
 static void device_add_cb(RoccatConfigWindow *roccat_window, gpointer user_data) {
@@ -94,7 +94,7 @@ static void device_add_cb(RoccatConfigWindow *roccat_window, gpointer user_data)
 	profile_number = arvo_actual_profile_read(device, &local_error);
 	if (!roccat_handle_error_dialog(GTK_WINDOW(roccat_window), _("Could not read actual profile"), &local_error))
 		return;
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(roccat_window), profile_number - 1);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(roccat_window), profile_number - 1);
 
 	dbus_g_proxy_connect_signal(priv->dbus_proxy, "ProfileChanged", G_CALLBACK(actual_profile_changed_from_device_cb), window, NULL);
 }
@@ -340,7 +340,7 @@ static void load_profile_from_file_cb(RoccatProfilePage *profile_page, gpointer 
 		g_free(path);
 
 		rkp = arvo_rkp_read_with_path(filename, &error);
-		
+
 		if (filter != linux_filter)
 			arvo_windows_rkp_to_linux(rkp);
 

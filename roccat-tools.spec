@@ -1,5 +1,19 @@
+%define default_udevdir /lib/udev/rules.d
+%{!?udevdir: %define udevdir %{default_udevdir}}
+
+%define default_eventhandlerdir %{_libdir}/roccat
+%{!?eventhandlerdir: %define eventhandlerdir %{default_eventhandlerdir}}
+
+%define default_gfx_plugindir %{_libdir}/gaminggear_plugins
+%{!?gfx_plugindir: %define gfx_plugindir %{default_gfx_plugindir}}
+
+%define default_luaversion 5.3.4
+%{!?luaversion: %define luaversion %{default_luaversion}}
+
+%global debug_package %{nil}
+
 Name: roccat
-Version: 5.7.0
+Version: 5.8.0
 Release: 1
 License: GPL
 Source: https://sourceforge.net/projects/roccat/files/roccat-tools/roccat-tools-%{version}.tar.bz2
@@ -14,18 +28,6 @@ BuildRequires: lua-devel = %{luaversion}
 BuildRequires: gettext >= 0.15
 ExclusiveOS: linux
 URL: http://roccat.sourceforge.net
-
-%define default_udevdir /lib/udev/rules.d
-%{!?udevdir: %define udevdir %{default_udevdir}}
-
-%define default_eventhandlerdir %{_libdir}/roccat
-%{!?eventhandlerdir: %define eventhandlerdir %{default_eventhandlerdir}}
-
-%define default_gfx_plugindir %{_libdir}/gaminggear_plugins
-%{!?gfx_plugindir: %define gfx_plugindir %{default_gfx_plugindir}}
-
-%define default_luaversion 5.3
-%{!?luaversion: %define luaversion %{default_luaversion}}
 
 Summary: Roccat common files
 
@@ -446,239 +448,263 @@ gtk-update-icon-cache %{_prefix}/share/icons/hicolor &>dev/null || :
 %files arvo
 %defattr(-,root,root)
 %{udevdir}/90-roccat-arvo.rules
-%{_bindir}/roccatarvo*
+%{_bindir}/roccatarvoconfig
+%{_bindir}/roccatarvocontrol
 %{_libdir}/libroccatarvo.so*
 %{eventhandlerdir}/libarvoeventhandler.so
 %{_datadir}/applications/roccatarvoconfig.desktop
-%{_mandir}/*/man1/roccatarvo*
+%{_mandir}/*/man1/roccatarvocontrol*
 
 %files isku
 %defattr(-,root,root)
 %{udevdir}/90-roccat-isku.rules
-%{_bindir}/roccatisku*
+%{_bindir}/roccatiskuconfig
+%{_bindir}/roccatiskucontrol
 %{_libdir}/libroccatisku.so*
 %{_libdir}/libroccatiskuwidget.so*
 %{eventhandlerdir}/libiskueventhandler.so
 %{_datadir}/applications/roccatiskuconfig.desktop
-%{_mandir}/*/man1/roccatisku*
+%{_mandir}/*/man1/roccatiskucontrol*
 
 %files iskufx
 %defattr(-,root,root)
 %{udevdir}/90-roccat-iskufx.rules
-%{_bindir}/roccatiskufx*
+%{_bindir}/roccatiskufxconfig
+%{_bindir}/roccatiskufxcontrol
 %{_libdir}/libroccatiskufx.so*
 %{eventhandlerdir}/libiskufxeventhandler.so
 %{gfx_plugindir}/libiskufxgfxplugin.so
 %{_datadir}/applications/roccatiskufxconfig.desktop
-%{_mandir}/*/man1/roccatiskufx*
+%{_mandir}/*/man1/roccatiskufxcontrol*
 
 %files kiro
 %defattr(-,root,root)
 %{udevdir}/90-roccat-kiro.rules
-%{_bindir}/roccatkiro*
+%{_bindir}/roccatkiroconfig
+%{_bindir}/roccatkirocontrol
 %{_libdir}/libroccatkiro.so*
 %{eventhandlerdir}/libkiroeventhandler.so
 %{gfx_plugindir}/libkirogfxplugin.so
 %{_datadir}/applications/roccatkiroconfig.desktop
-%{_mandir}/*/man1/roccatkiro*
+%{_mandir}/*/man1/roccatkirocontrol*
 
 %files kone
 %defattr(-,root,root)
 %{udevdir}/90-roccat-kone.rules
-%{_bindir}/roccatkone*
+%{_bindir}/roccatkoneconfig
+%{_bindir}/roccatkonecontrol
 %{_libdir}/libroccatkone.so*
 %{eventhandlerdir}/libkoneeventhandler.so
 %{_datadir}/applications/roccatkoneconfig.desktop
-%{_mandir}/*/man1/roccatkone*
+%{_mandir}/*/man1/roccatkonecontrol*
 
 %files koneplus
 %defattr(-,root,root)
 %{udevdir}/90-roccat-koneplus.rules
-%{_bindir}/roccatkoneplus*
+%{_bindir}/roccatkoneplusconfig
+%{_bindir}/roccatkonepluscontrol
 %{_libdir}/libroccatkoneplus.so*
 %{_libdir}/libroccatkonepluswidget.so*
 %{eventhandlerdir}/libkonepluseventhandler.so
 %{gfx_plugindir}/libkoneplusgfxplugin.so
 %{_datadir}/applications/roccatkoneplusconfig.desktop
-%{_mandir}/*/man1/roccatkoneplus*
+%{_mandir}/*/man1/roccatkonepluscontrol*
 
 %files konepure
 %defattr(-,root,root)
 %{udevdir}/90-roccat-konepure.rules
-%{_bindir}/roccatkonepure*
+%{_bindir}/roccatkonepureconfig
+%{_bindir}/roccatkonepurecontrol
 %{_libdir}/libroccatkonepure.so*
 %{_libdir}/libroccatkonepurewidget.so*
 %{eventhandlerdir}/libkonepureeventhandler.so
 %{gfx_plugindir}/libkonepuregfxplugin.so
 %{_datadir}/applications/roccatkonepureconfig.desktop
-%{_mandir}/*/man1/roccatkonepure*
+%{_mandir}/*/man1/roccatkonepurecontrol*
 
 %files konepuremilitary
 %defattr(-,root,root)
 %{udevdir}/90-roccat-konepuremilitary.rules
-%{_bindir}/roccatkonepuremilitary*
+%{_bindir}/roccatkonepuremilitaryconfig
+%{_bindir}/roccatkonepuremilitarycontrol
 %{_libdir}/libroccatkonepuremilitary.so*
 %{_libdir}/libroccatkonepuremilitarywidget.so*
 %{eventhandlerdir}/libkonepuremilitaryeventhandler.so
 %{gfx_plugindir}/libkonepuremilitarygfxplugin.so
 %{_datadir}/applications/roccatkonepuremilitaryconfig.desktop
-%{_mandir}/*/man1/roccatkonepuremilitary*
+%{_mandir}/*/man1/roccatkonepuremilitarycontrol*
 
 %files konepureoptical
 %defattr(-,root,root)
 %{udevdir}/90-roccat-konepureoptical.rules
-%{_bindir}/roccatkonepureoptical*
+%{_bindir}/roccatkonepureopticalconfig
+%{_bindir}/roccatkonepureopticalcontrol
 %{_libdir}/libroccatkonepureoptical.so*
 %{eventhandlerdir}/libkonepureopticaleventhandler.so
 %{gfx_plugindir}/libkonepureopticalgfxplugin.so
 %{_datadir}/applications/roccatkonepureopticalconfig.desktop
-%{_mandir}/*/man1/roccatkonepureoptical*
+%{_mandir}/*/man1/roccatkonepureopticalcontrol*
 
 %files konextd
 %defattr(-,root,root)
 %{udevdir}/90-roccat-konextd.rules
-%{_bindir}/roccatkonextd*
+%{_bindir}/roccatkonextdconfig
+%{_bindir}/roccatkonextdcontrol
 %{_libdir}/libroccatkonextd.so*
 %{_libdir}/libroccatkonextdwidget.so*
 %{eventhandlerdir}/libkonextdeventhandler.so
 %{gfx_plugindir}/libkonextdgfxplugin.so
 %{_datadir}/applications/roccatkonextdconfig.desktop
-%{_mandir}/*/man1/roccatkonextd*
+%{_mandir}/*/man1/roccatkonextdcontrol*
 
 %files konextdoptical
 %defattr(-,root,root)
 %{udevdir}/90-roccat-konextdoptical.rules
-%{_bindir}/roccatkonextdoptical*
+%{_bindir}/roccatkonextdopticalconfig
+%{_bindir}/roccatkonextdopticalcontrol
 %{_libdir}/libroccatkonextdoptical.so*
 %{eventhandlerdir}/libkonextdopticaleventhandler.so
 %{gfx_plugindir}/libkonextdopticalgfxplugin.so
 %{_datadir}/applications/roccatkonextdopticalconfig.desktop
-%{_mandir}/*/man1/roccatkonextdoptical*
+%{_mandir}/*/man1/roccatkonextdopticalcontrol*
 
 %files kova2016
 %defattr(-,root,root)
 %{udevdir}/90-roccat-kova2016.rules
-%{_bindir}/roccatkova2016*
+%{_bindir}/roccatkova2016config
+%{_bindir}/roccatkova2016control
 %{_libdir}/libroccatkova2016.so*
 %{eventhandlerdir}/libkova2016eventhandler.so
 %{gfx_plugindir}/libkova2016gfxplugin.so
 %{_datadir}/applications/roccatkova2016config.desktop
-%{_mandir}/*/man1/roccatkova2016*
+%{_mandir}/*/man1/roccatkova2016control*
 
 %files kovaplus
 %defattr(-,root,root)
 %{udevdir}/90-roccat-kovaplus.rules
-%{_bindir}/roccatkovaplus*
+%{_bindir}/roccatkovaplusconfig
+%{_bindir}/roccatkovapluscontrol
 %{_libdir}/libroccatkovaplus.so*
 %{eventhandlerdir}/libkovapluseventhandler.so
 %{_datadir}/applications/roccatkovaplusconfig.desktop
-%{_mandir}/*/man1/roccatkovaplus*
+%{_mandir}/*/man1/roccatkovapluscontrol*
 
 %files lua
 %defattr(-,root,root)
 %{udevdir}/90-roccat-lua.rules
-%{_bindir}/roccatlua*
+%{_bindir}/roccatluaconfig
+%{_bindir}/roccatluacontrol
 %{_libdir}/libroccatlua.so*
 %{eventhandlerdir}/libluaeventhandler.so
 %{_datadir}/applications/roccatluaconfig.desktop
-%{_mandir}/*/man1/roccatlua*
+%{_mandir}/*/man1/roccatluacontrol*
 
 %files nyth
 %defattr(-,root,root)
 %{udevdir}/90-roccat-nyth.rules
-%{_bindir}/roccatnyth*
+%{_bindir}/roccatnythconfig
+%{_bindir}/roccatnythcontrol
 %{_libdir}/libroccatnyth.so*
 %{eventhandlerdir}/libnytheventhandler.so
 %{gfx_plugindir}/libnythgfxplugin.so
 %{_datadir}/applications/roccatnythconfig.desktop
-%{_mandir}/*/man1/roccatnyth*
+%{_mandir}/*/man1/roccatnythcontrol*
 
 %files pyra
 %defattr(-,root,root)
 %{udevdir}/90-roccat-pyra.rules
-%{_bindir}/roccatpyra*
+%{_bindir}/roccatpyraconfig
+%{_bindir}/roccatpyracontrol
 %{_libdir}/libroccatpyra.so*
 %{eventhandlerdir}/libpyraeventhandler.so
 %{_datadir}/applications/roccatpyraconfig.desktop
-%{_mandir}/*/man1/roccatpyra*
+%{_mandir}/*/man1/roccatpyracontrol*
 
 %files ryosmk
 %defattr(-,root,root)
 %{udevdir}/90-roccat-ryosmk.rules
-%{_bindir}/roccatryosmk*
+%{_bindir}/roccatryosmkconfig
+%{_bindir}/roccatryosmkcontrol
 %{_libdir}/libroccatryosmk.so*
 %{_libdir}/libroccatryosmkwidget.so*
 %{eventhandlerdir}/libryosmkeventhandler.so
 %{_datadir}/applications/roccatryosmkconfig.desktop
-%{_mandir}/*/man1/roccatryosmk*
+%{_mandir}/*/man1/roccatryosmkcontrol*
 %{_datadir}/roccat/ryos_effect_modules
 
 %files ryosmkfx
 %defattr(-,root,root)
 %{udevdir}/90-roccat-ryosmkfx.rules
-%{_bindir}/roccatryosmkfx*
+%{_bindir}/roccatryosmkfxconfig
+%{_bindir}/roccatryosmkfxcontrol
 %{_libdir}/libroccatryosmkfx.so*
 %{eventhandlerdir}/libryosmkfxeventhandler.so
 %{gfx_plugindir}/libryosmkfxgfxplugin.so
 %{_datadir}/applications/roccatryosmkfxconfig.desktop
-%{_mandir}/*/man1/roccatryosmkfx*
+%{_mandir}/*/man1/roccatryosmkfxcontrol*
 
 %files ryostkl
 %defattr(-,root,root)
 %{udevdir}/90-roccat-ryostkl.rules
-%{_bindir}/roccatryostkl*
+%{_bindir}/roccatryostklconfig
+%{_bindir}/roccatryostklcontrol
 %{_libdir}/libroccatryostkl.so*
 %{eventhandlerdir}/libryostkleventhandler.so
 %{_datadir}/applications/roccatryostklconfig.desktop
-%{_mandir}/*/man1/roccatryostkl*
+%{_mandir}/*/man1/roccatryostklcontrol*
 
 %files savu
 %defattr(-,root,root)
 %{udevdir}/90-roccat-savu.rules
-%{_bindir}/roccatsavu*
+%{_bindir}/roccatsavuconfig
+%{_bindir}/roccatsavucontrol
 %{_libdir}/libroccatsavu.so*
 %{eventhandlerdir}/libsavueventhandler.so
 %{_datadir}/applications/roccatsavuconfig.desktop
-%{_mandir}/*/man1/roccatsavu*
+%{_mandir}/*/man1/roccatsavucontrol*
 
 %files skeltr
 %defattr(-,root,root)
 %{udevdir}/90-roccat-skeltr.rules
-%{_bindir}/roccatskeltr*
+%{_bindir}/roccatskeltrconfig
+%{_bindir}/roccatskeltrcontrol
 %{_libdir}/libroccatskeltr.so*
 %{eventhandlerdir}/libskeltreventhandler.so
 %{gfx_plugindir}/libskeltrgfxplugin.so
 %{_datadir}/applications/roccatskeltrconfig.desktop
-%{_mandir}/*/man1/roccatskeltr*
+%{_mandir}/*/man1/roccatskeltrcontrol*
 
 %files sova
 %defattr(-,root,root)
 %{udevdir}/90-roccat-sova.rules
-%{_bindir}/roccatsova*
+%{_bindir}/roccatsovaconfig
+%{_bindir}/roccatsovacontrol
 %{_libdir}/libroccatsova.so*
 %{eventhandlerdir}/libsovaeventhandler.so
 %{_datadir}/applications/roccatsovaconfig.desktop
-%{_mandir}/*/man1/roccatsova*
+%{_mandir}/*/man1/roccatsovacontrol*
 
 %files suora
 %defattr(-,root,root)
 %{udevdir}/90-roccat-suora.rules
-%{_bindir}/roccatsuora*
+%{_bindir}/roccatsuoraconfig
+%{_bindir}/roccatsuoracontrol
 %{_libdir}/libroccatsuora.so*
 %{eventhandlerdir}/libsuoraeventhandler.so
 %{_datadir}/applications/roccatsuoraconfig.desktop
-%{_mandir}/*/man1/roccatsuora*
+%{_mandir}/*/man1/roccatsuoracontrol*
 
 %files tyon
 %defattr(-,root,root)
 %{udevdir}/90-roccat-tyon.rules
-%{_bindir}/roccattyon*
+%{_bindir}/roccattyonconfig
+%{_bindir}/roccattyoncontrol
 %{_libdir}/libroccattyon.so*
 %{eventhandlerdir}/libtyoneventhandler.so
 %{gfx_plugindir}/libtyongfxplugin.so
 %{_datadir}/applications/roccattyonconfig.desktop
-%{_mandir}/*/man1/roccattyon*
+%{_mandir}/*/man1/roccattyoncontrol*
 
 %changelog
-* Tue Jun 13 2017 Stefan Achatz <erazor_de@users.sourceforge.net> 5.7.0-1
+* Sat Apr 13 2019 Stefan Achatz <erazor_de@users.sourceforge.net> 5.9.0-1
 - Initial version

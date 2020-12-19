@@ -10,8 +10,6 @@ TARGET_LINK_LIBRARIES(libroccatkonextdwidget
   ${GTK_LIBRARIES}
 )
 
-TARGET_LINK_LIBRARIES(libroccatkonextdwidget LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatkonextdwidget
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}

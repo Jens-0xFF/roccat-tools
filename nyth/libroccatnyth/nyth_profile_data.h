@@ -28,7 +28,7 @@ typedef struct _NythProfileData NythProfileData;
 struct _NythProfileData {
 	NythProfileDataEventhandler eventhandler;
 	NythProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 NythProfileData *nyth_profile_data_new(void);
 NythProfileData *nyth_profile_data_dup(NythProfileData const *other);

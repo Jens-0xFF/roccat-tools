@@ -54,7 +54,7 @@ guint roccat_config_window_pages_get_num_pages(RoccatConfigWindowPages *config_w
 gboolean roccat_config_window_pages_get_page_moved(RoccatConfigWindowPages *config_window, RoccatProfilePage *profile_page);
 void roccat_config_window_pages_set_page_unmoved(RoccatConfigWindowPages *config_window, RoccatProfilePage *profile_page);
 
-void roccat_config_window_pages_set_active_page(RoccatConfigWindowPages *config_window, guint index);
+void roccat_config_window_pages_set_active_page_blocked(RoccatConfigWindowPages *config_window, guint index);
 gint roccat_config_window_pages_get_active_page(RoccatConfigWindowPages *config_window);
 
 G_END_DECLS

@@ -88,6 +88,40 @@ void roccat_config_window_pages_set_page_unmoved(RoccatConfigWindowPages *config
 	roccat_profile_page_tab_label_set_index(get_tab_label_from_profile_page(config_window, profile_page), is_index);
 }
 
+static void active_changed_cb(RoccatProfilePageTabLabel *tab_label, gpointer user_data) {
+	RoccatConfigWindowPages *config_window = ROCCAT_CONFIG_WINDOW_PAGES(user_data);
+	RoccatConfigWindowPagesPrivate *priv = ROCCAT_CONFIG_WINDOW_PAGES(user_data)->priv;
+	guint new_active;
+
+	new_active = roccat_config_window_pages_get_page_index(config_window, get_profile_page_from_tab_label(config_window, tab_label));
+	if (priv->active_page != new_active) {
+		priv->active_page = new_active;
+		g_signal_emit(user_data, signals[ACTIVE_CHANGED], 0);
+	}
+}
+
+static void roccat_config_window_pages_set_active_page(RoccatConfigWindowPages *config_window, guint index) {
+	RoccatProfilePageTabLabel *tab_label = get_tab_label(config_window, index);
+	if (tab_label) {
+		roccat_profile_page_tab_label_set_active(tab_label);
+		config_window->priv->active_page = index;
+	}
+}
+
+void roccat_config_window_pages_set_active_page_blocked(RoccatConfigWindowPages *config_window, guint index) {
+	RoccatProfilePageTabLabel *tab_label = get_tab_label(config_window, index);
+	if (tab_label) {
+		g_signal_handlers_block_by_func(G_OBJECT(tab_label), G_CALLBACK(active_changed_cb), config_window);
+		roccat_profile_page_tab_label_set_active(tab_label);
+		g_signal_handlers_unblock_by_func(G_OBJECT(tab_label), G_CALLBACK(active_changed_cb), config_window);
+		config_window->priv->active_page = index;
+	}
+}
+
+gint roccat_config_window_pages_get_active_page(RoccatConfigWindowPages *config_window) {
+	return config_window->priv->active_page;
+}
+
 static void page_reordered_cb(GtkNotebook *notebook, GtkWidget *child, guint page_num, gpointer user_data) {
 	RoccatConfigWindowPages *config_window = ROCCAT_CONFIG_WINDOW_PAGES(user_data);
 	roccat_config_window_pages_set_active_page(config_window, roccat_config_window_pages_get_active_page(config_window));
@@ -210,30 +244,6 @@ static void roccat_config_window_pages_class_init(RoccatConfigWindowPagesClass *
 			G_TYPE_FROM_CLASS(klass),
 			G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION, 0,
 			NULL, NULL, g_cclosure_roccat_marshal_BOOLEAN__UINT, G_TYPE_BOOLEAN, 1, G_TYPE_UINT);
-}
-
-void roccat_config_window_pages_set_active_page(RoccatConfigWindowPages *config_window, guint index) {
-	RoccatProfilePageTabLabel *tab_label = get_tab_label(config_window, index);
-	if (tab_label) {
-		roccat_profile_page_tab_label_set_active(tab_label);
-		config_window->priv->active_page = index;
-	}
-}
-
-gint roccat_config_window_pages_get_active_page(RoccatConfigWindowPages *config_window) {
-	return config_window->priv->active_page;
-}
-
-static void active_changed_cb(RoccatProfilePageTabLabel *tab_label, gpointer user_data) {
-	RoccatConfigWindowPages *config_window = ROCCAT_CONFIG_WINDOW_PAGES(user_data);
-	RoccatConfigWindowPagesPrivate *priv = ROCCAT_CONFIG_WINDOW_PAGES(user_data)->priv;
-	guint new_active;
-
-	new_active = roccat_config_window_pages_get_page_index(config_window, get_profile_page_from_tab_label(config_window, tab_label));
-	if (priv->active_page != new_active) {
-		priv->active_page = new_active;
-		g_signal_emit(user_data, signals[ACTIVE_CHANGED], 0);
-	}
 }
 
 static void remove_page(RoccatConfigWindowPages *config_window, RoccatProfilePage *profile_page) {

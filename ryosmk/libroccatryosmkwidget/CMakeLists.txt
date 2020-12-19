@@ -8,6 +8,7 @@ ADD_LIBRARY(libroccatryosmkwidget SHARED
   ryos_layer_mode_selector.c
   ryos_layer_selector.c
   ryos_layout_selector.c
+  ryos_notification_frame.c
   ryos_standard_selector.c
 )
 
@@ -19,8 +20,6 @@ TARGET_LINK_LIBRARIES(libroccatryosmkwidget
   ${GAMINGGEAR0_LIBRARY}
   ${GAMINGGEAR0_WIDGET_LIBRARY}
 )
-
-TARGET_LINK_LIBRARIES(libroccatryosmkwidget LINK_INTERFACE_LIBRARIES)
 
 SET_TARGET_PROPERTIES(libroccatryosmkwidget
   PROPERTIES

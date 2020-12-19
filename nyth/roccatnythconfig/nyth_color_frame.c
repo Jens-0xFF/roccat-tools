@@ -48,8 +48,6 @@ static gchar const * const labels[NYTH_LIGHTS_NUM] = {
 	N_("Bottom"),
 };
 
-static gchar const * const value_key = "value";
-
 void nyth_color_frame_set_from_profile_data(NythColorFrame *frame, NythProfileData const *profile_data) {
 	NythColorFramePrivate *priv = frame->priv;
 	NythProfileSettings const *profile_settings = &profile_data->hardware.profile_settings;

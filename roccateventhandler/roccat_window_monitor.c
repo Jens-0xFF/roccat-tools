@@ -492,8 +492,14 @@ static gboolean timeout_cb(gpointer user_data) {
 	old_error_handler = XSetErrorHandler(error_handler);
 
 	window = get_current_window(monitor);
-	if (window == None)
+	if (window == None) {
+		if (priv->last_string != NULL) { // Change to desktop
+			g_signal_emit((gpointer)monitor, signals[ACTIVE_WINDOW_CHANGED], 0, "");
+			g_free(priv->last_string);
+			priv->last_string = NULL;
+		}
 		return TRUE;
+	}
 
 	process_name = window_get_process_name(monitor, window);
 	window_name = window_get_name(monitor, window);

@@ -457,6 +457,7 @@ static void set_tooltips(SkeltrKeyboardSelector *keyboard_selector) {
 			break;
 		case SKELTR_KEY_RELATION_TYPE_FN:
 			set_fn_tooltip(keyboard_selector, i);
+			__attribute__ ((fallthrough));
 		case SKELTR_KEY_RELATION_TYPE_CAPSLOCK:
 			set_capslock_tooltip(keyboard_selector, i);
 			break;

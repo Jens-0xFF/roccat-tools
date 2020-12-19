@@ -181,7 +181,7 @@ gpointer sova_profile_data_to_rkp(SovaProfileData const *profile_data, gsize *le
 	roccat_swarm_rmp_write_unknown(&rkp, &local_length, 0);
 	roccat_swarm_rmp_write_timers(&rkp, &local_length);
 	roccat_swarm_rmp_write_unknown_with_count(&rkp, &local_length, 0, 0);
-	roccat_swarm_rmp_write_unknown(&rkp, &local_length, 0); // pictures
+	roccat_swarm_rmp_write_unknown_with_count(&rkp, &local_length, 0, 0); // pictures
 	write_talk(profile_data, &rkp, &local_length);
 	write_keys_function(profile_data, &rkp, &local_length);
 	write_keys_easyzone(profile_data, &rkp, &local_length);
@@ -447,7 +447,6 @@ gboolean sova_rkp_to_profile_data(SovaProfileData *profile_data, gconstpointer r
 	if (!roccat_swarm_rmp_read_unknown(&pointer)) goto error;
 	if (!read_header(profile_data, &pointer)) goto error;
 	if (!read_gamefiles(profile_data, &pointer)) goto error;
-	if (!roccat_swarm_rmp_read_unknown(&pointer)) goto error;
 	if (!read_openers(profile_data, &pointer)) goto error;
 	if (!roccat_swarm_rmp_read_unknown(&pointer)) goto error;
 	if (!roccat_swarm_rmp_read_timers(&pointer)) goto error;

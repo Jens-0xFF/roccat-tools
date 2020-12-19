@@ -21,7 +21,7 @@
 #include "ryosconfig_keyboard_selector.h"
 #include "ryosconfig_led_feedback_frame.h"
 #include "ryos_key_mask_selector.h"
-#include "ryosconfig_notification_frame.h"
+#include "ryos_notification_frame.h"
 #include "g_cclosure_roccat_marshaller.h"
 #include "i18n.h"
 
@@ -49,7 +49,7 @@ struct _RyosconfigProfilePagePrivate {
 	RoccatGamefileSelector *gamefiles;
 	RyosconfigLedFeedbackFrame *feedback_frame;
 	RyosKeyMaskSelector *key_mask_selector;
-	RyosconfigNotificationFrame *notification_frame;
+	RyosNotificationFrame *notification_frame;
 };
 
 G_DEFINE_TYPE(RyosconfigProfilePage, ryosconfig_profile_page, ROCCAT_PROFILE_PAGE_TYPE);
@@ -87,6 +87,13 @@ GtkWidget *ryosconfig_profile_page_new(void) {
 	return GTK_WIDGET(g_object_new(RYOSCONFIG_PROFILE_PAGE_TYPE, NULL));
 }
 
+static void ryos_notification_frame_set_from_profile_data(RyosNotificationFrame *notification_frame, RyosProfileData const *profile_data) {
+	ryos_notification_frame_set_timer_type(notification_frame, profile_data->eventhandler.timer_notification_type);
+	ryos_notification_frame_set_profile_type(notification_frame, profile_data->eventhandler.profile_notification_type);
+	ryos_notification_frame_set_live_recording_type(notification_frame, profile_data->eventhandler.live_recording_notification_type);
+	ryos_notification_frame_set_volume(notification_frame, profile_data->eventhandler.notification_volume);
+}
+
 static void set_from_profile_data(RyosconfigProfilePage *profile_page, RoccatKeyFile *config) {
 	RyosconfigProfilePagePrivate *priv = profile_page->priv;
 	guint i;
@@ -96,11 +103,40 @@ static void set_from_profile_data(RyosconfigProfilePage *profile_page, RoccatKey
 	ryosconfig_light_frame_set_from_profile_data(priv->light_frame, priv->profile_data, config);
 	ryosconfig_led_feedback_frame_set_from_profile_data(priv->feedback_frame, priv->profile_data);
 	ryosconfig_keyboard_selector_set_from_profile_data(priv->keyboard_selector, priv->profile_data);
-	ryosconfig_notification_frame_set_from_profile_data(priv->notification_frame, priv->profile_data);
+	ryos_notification_frame_set_from_profile_data(priv->notification_frame, priv->profile_data);
 	ryos_key_mask_selector_set_mask(priv->key_mask_selector, priv->profile_data->hardware.key_mask.mask);
 
 	for (i = 0; i < RYOS_RKP_PROFILE_GAMEFILE_NUM; ++i)
 		roccat_gamefile_selector_set_text(priv->gamefiles, i, priv->profile_data->eventhandler.gamefile_names[i]);
+}
+
+static void ryos_notification_frame_update_profile_data(RyosNotificationFrame *notification_frame, RyosProfileData *profile_data) {
+	guint8 int_val;
+	gdouble double_val;
+
+	int_val = ryos_notification_frame_get_timer_type(notification_frame);
+	if (int_val != profile_data->eventhandler.timer_notification_type) {
+		profile_data->eventhandler.timer_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	int_val = ryos_notification_frame_get_profile_type(notification_frame);
+	if (int_val != profile_data->eventhandler.profile_notification_type) {
+		profile_data->eventhandler.profile_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	int_val = ryos_notification_frame_get_live_recording_type(notification_frame);
+	if (int_val != profile_data->eventhandler.live_recording_notification_type) {
+		profile_data->eventhandler.live_recording_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	double_val = ryos_notification_frame_get_volume(notification_frame);
+	if (double_val != profile_data->eventhandler.notification_volume) {
+		profile_data->eventhandler.notification_volume = double_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
 }
 
 static void update_profile_data(RyosconfigProfilePage *profile_page, RyosProfileData *profile_data, RoccatKeyFile *config) {
@@ -116,7 +152,7 @@ static void update_profile_data(RyosconfigProfilePage *profile_page, RyosProfile
 	ryosconfig_light_frame_update_profile_data(priv->light_frame, profile_data, config);
 	ryosconfig_led_feedback_frame_update_profile_data(priv->feedback_frame, profile_data);
 	ryosconfig_keyboard_selector_update_profile_data(priv->keyboard_selector, profile_data);
-	ryosconfig_notification_frame_update_profile_data(priv->notification_frame, profile_data);
+	ryos_notification_frame_update_profile_data(priv->notification_frame, profile_data);
 
 	key_mask.mask = ryos_key_mask_selector_get_mask(priv->key_mask_selector);
 	ryos_profile_data_hardware_set_key_mask(&profile_data->hardware, &key_mask);
@@ -163,7 +199,7 @@ static void append_misc_page(RyosconfigProfilePage *profile_page, GtkNotebook *n
 	priv->feedback_frame = RYOSCONFIG_LED_FEEDBACK_FRAME(ryosconfig_led_feedback_frame_new());
 	priv->gamefiles = ROCCAT_GAMEFILE_SELECTOR(roccat_gamefile_selector_new(RYOS_RKP_PROFILE_GAMEFILE_NUM));
 	priv->key_mask_selector = RYOS_KEY_MASK_SELECTOR(ryos_key_mask_selector_new());
-	priv->notification_frame = RYOSCONFIG_NOTIFICATION_FRAME(ryosconfig_notification_frame_new());
+	priv->notification_frame = RYOS_NOTIFICATION_FRAME(ryos_notification_frame_new());
 
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->light_frame), TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->feedback_frame), TRUE, TRUE, 0);

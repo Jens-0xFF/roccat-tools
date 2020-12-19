@@ -1,4 +1,4 @@
-# Stefan Achatz 2016
+# Stefan Achatz 2019
 #
 # Tries to find liblua and sets following variables according to found capabilities:
 #
@@ -6,7 +6,10 @@
 # LUA_INCLUDE_DIR
 # LUA_LIBRARY
 #
-# LUA_FIND_VERSION is mandatory and only exact match is supported.
+# LUA_FIND_VERSION is mandatory and only exact match is supported. Can be version (eg 5.3) or release (eg 5.3.4)
+#
+# Ubuntu seems to provide pkgconfig files "lua53" "lua5.3" "lua-5.3"
+# Fedora provides pkgconfig "lua" for newest and "lua-5.3" for compatibility versions
 
 IF(NOT LUA_FIND_VERSION OR NOT LUA_FIND_VERSION_EXACT)
   MESSAGE(FATAL_ERROR "Lua finder needs exact version!")
@@ -15,10 +18,12 @@ ENDIF()
 # LUA_FIND_VERSION = 5.1
 # _LUA_FIND_VERSION_MAYOR = 5
 # _LUA_FIND_VERSION_MINOR = 1
-STRING(REGEX REPLACE "([0-9]+)\\.([0-9]+)" "\\1" _LUA_FIND_VERSION_MAYOR ${LUA_FIND_VERSION})
-STRING(REGEX REPLACE "([0-9]+)\\.([0-9]+)" "\\2" _LUA_FIND_VERSION_MINOR ${LUA_FIND_VERSION})
+STRING(REGEX REPLACE "([0-9]+).*" "\\1" _LUA_FIND_VERSION_MAYOR ${LUA_FIND_VERSION})
+STRING(REGEX REPLACE "[0-9]+\\.([0-9]+).*" "\\1" _LUA_FIND_VERSION_MINOR ${LUA_FIND_VERSION})
 # _LUA_FIND_VERSION_NUM_SHORT = 51; used for postfix
 SET(_LUA_FIND_VERSION_NUM_SHORT ${_LUA_FIND_VERSION_MAYOR}${_LUA_FIND_VERSION_MINOR})
+# _LUA_FIND_VERSION_SHORT = 5.1; used for postfix
+SET(_LUA_FIND_VERSION_SHORT ${_LUA_FIND_VERSION_MAYOR}.${_LUA_FIND_VERSION_MINOR})
 # _LUA_FIND_VERSION_NUM = 501; used for version comparison
 IF(${_LUA_FIND_VERSION_MINOR} LESS 10)
   SET(_LUA_FIND_VERSION_NUM ${_LUA_FIND_VERSION_MAYOR}0${_LUA_FIND_VERSION_MINOR})
@@ -26,7 +31,11 @@ ELSE()
   SET(_LUA_FIND_VERSION_NUM ${_LUA_FIND_VERSION_MAYOR}${_LUA_FIND_VERSION_MINOR})
 ENDIF()
 
-SET(_LUA_POSTFIXES ${_LUA_FIND_VERSION_NUM_SHORT} ${LUA_FIND_VERSION} -${LUA_FIND_VERSION})
+SET(_LUA_POSTFIXES
+  ${_LUA_FIND_VERSION_NUM_SHORT}
+  ${_LUA_FIND_VERSION_SHORT}
+  -${_LUA_FIND_VERSION_SHORT}
+)
 SET(_LUA_NAMES luajit lua)
 
 FIND_PACKAGE(PkgConfig)

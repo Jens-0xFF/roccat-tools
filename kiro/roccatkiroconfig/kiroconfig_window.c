@@ -229,7 +229,7 @@ static void add_pages(KiroconfigWindow *window) {
 	add_page(window, profile_data);
 	g_free(profile_data);
 
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(window), 0);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(window), 0);
 }
 
 static void device_add_cb(RoccatConfigWindow *roccat_window, gpointer user_data) {

@@ -33,8 +33,6 @@ TARGET_LINK_LIBRARIES(libroccatryosmkfx
   ${GLIB2_LIBRARIES}
 )
 
-TARGET_LINK_LIBRARIES(libroccatryosmkfx LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatryosmkfx
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}
@@ -44,4 +42,3 @@ SET_TARGET_PROPERTIES(libroccatryosmkfx
 )
 
 INSTALL(TARGETS libroccatryosmkfx DESTINATION ${LIBDIR})
-  

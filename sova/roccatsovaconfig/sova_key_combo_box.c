@@ -492,7 +492,7 @@ static GtkTreeModel *key_info_model_new(void) {
 
 	roccat_key_combo_box_store_append(store, &toplevel, NULL, _("Open"), ROCCAT_KEY_COMBO_BOX_TYPE_NONE, SOVA_KEY_COMBO_BOX_GROUP_KEY | SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);
 	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Driver"), SOVA_KEY_TYPE_OPEN_DRIVER, SOVA_KEY_COMBO_BOX_GROUP_KEY);
-	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Application"), SOVA_KEY_TYPE_OPEN_DRIVER, SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);
+	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Application"), SOVA_KEY_TYPE_OPEN_APP, SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);
 	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Document"), SOVA_KEY_TYPE_OPEN_DOCUMENT, SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);
 	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Folder"), SOVA_KEY_TYPE_OPEN_FOLDER, SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);
 	roccat_key_combo_box_store_append(store, NULL, &toplevel, _("Website"), SOVA_KEY_TYPE_OPEN_WEBSITE, SOVA_KEY_COMBO_BOX_GROUP_EXTENDED);

@@ -28,7 +28,7 @@ typedef struct _RyosProfileData RyosProfileData;
 struct _RyosProfileData {
 	RyosProfileDataEventhandler eventhandler;
 	RyosProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 RyosProfileData *ryos_profile_data_new(void);
 RyosProfileData *ryos_profile_data_dup(RyosProfileData const *other);

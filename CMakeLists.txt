@@ -1,7 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-IF(POLICY CMP0022)
-  CMAKE_POLICY(SET CMP0022 OLD)
-ENDIF()
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
 
 PROJECT(roccat-tools C)
 
@@ -37,7 +34,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DG_DISABLE_CAST_CHECKS -DG_
 SET(TRANSLATION_LANGUAGES de en)
 
 SET(ALL_DEVICES
-  arvo 
+  arvo
   isku iskufx
   kiro
   koneplus
@@ -100,7 +97,7 @@ ADD_CUSTOM_TARGET(uninstall
 )
 
 SET(V_MAJOR 5)
-SET(V_MINOR 7)
+SET(V_MINOR 9)
 SET(V_PATCH 0)
 
 ENABLE_TESTING()
@@ -130,7 +127,7 @@ MACRO(add_dbus_bindings name)
     DEPENDS
       ${CMAKE_CURRENT_SOURCE_DIR}/${name}_dbus_services.xml
   )
-  
+
   ADD_CUSTOM_TARGET(${name}_dbus_bindings ALL
     DEPENDS
       ${CMAKE_CURRENT_BINARY_DIR}/${name}_dbus_server_glue.h

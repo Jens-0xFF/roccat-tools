@@ -28,7 +28,7 @@ typedef struct _KiroProfileData KiroProfileData;
 struct _KiroProfileData {
 	KiroProfileDataEventhandler eventhandler;
 	KiroProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 KiroProfileData *kiro_profile_data_new(void);
 KiroProfileData *kiro_profile_data_dup(KiroProfileData const *other);

@@ -27,6 +27,7 @@ typedef struct _RyosKeyRelation RyosKeyRelation;
 enum {
 	RYOS_KEY_RELATIONS_NUM = 119,
 	RYOS_KEY_RELATIONS_INDEX_INVALID = 0xff,
+	RYOS_SDK_KEY_NUM = 110,
 };
 
 struct _RyosKeyRelation {
