@@ -48,8 +48,6 @@ static gchar const * const labels[KOVA2016_LIGHTS_NUM] = {
 	N_("Wheel"),
 };
 
-static gchar const * const value_key = "value";
-
 void kova2016_color_frame_set_from_profile_data(Kova2016ColorFrame *frame, Kova2016ProfileData const *profile_data) {
 	Kova2016ColorFramePrivate *priv = frame->priv;
 	Kova2016ProfileSettings const *profile_settings = &profile_data->hardware.profile_settings;

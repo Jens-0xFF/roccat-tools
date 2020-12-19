@@ -51,8 +51,6 @@ static gchar const * const labels[TYON_LIGHTS_NUM] = {
 	N_("Bottom"),
 };
 
-static gchar const * const value_key = "value";
-
 /* These are values for screen, atm identical to device values */
 static GdkColor const screen_colors[TYON_RMP_LIGHT_INFO_COLORS_NUM] = {
 	{0, 0x05 * GDK_ROCCAT_BYTE_TO_COLOR_FACTOR, 0x90 * GDK_ROCCAT_BYTE_TO_COLOR_FACTOR, 0xfe * GDK_ROCCAT_BYTE_TO_COLOR_FACTOR},
@@ -101,14 +99,14 @@ void tyon_color_frame_set_from_rmp(TyonColorFrame *frame, TyonRmp *rmp) {
 		gtk_toggle_button_set_active(priv->use_custom, TRUE);
 
 	gtk_toggle_button_set_active(priv->use_color_for_all, tyon_rmp_get_use_color_for_all(rmp));
-	
+
 	for (i = 0; i < TYON_LIGHTS_NUM; ++i) {
 		light_info = tyon_rmp_get_custom_light_info(rmp, i);
 		tyon_rmp_light_info_to_color(light_info, &color);
 		roccat_color_selection_button_set_custom_color(priv->colors[i], &color);
 		gtk_toggle_button_set_active(priv->buttons[i], (light_info->state == TYON_RMP_LIGHT_INFO_STATE_ON) ? TRUE : FALSE);
 		g_free(light_info);
-		
+
 		light_info = tyon_rmp_get_rmp_light_info(rmp, i);
 		roccat_color_selection_button_set_palette_index(priv->colors[i], light_info->index);
 		g_free(light_info);
@@ -135,7 +133,7 @@ void tyon_color_frame_update_rmp(TyonColorFrame *frame, TyonRmp *rmp) {
 		light_info.blue = color.blue / GDK_ROCCAT_BYTE_TO_COLOR_FACTOR;
 		light_info.null = 0;
 		tyon_rmp_set_custom_light_info(rmp, i, &light_info);
-		
+
 		light_info = *tyon_rmp_light_info_get_standard(roccat_color_selection_button_get_palette_index(priv->colors[i]));
 		tyon_rmp_set_rmp_light_info(rmp, i, &light_info);
 	}
@@ -180,7 +178,7 @@ static void tyon_color_frame_init(TyonColorFrame *frame) {
 	GtkTable *table;
 	GtkVBox *vbox;
 	guint i;
-	
+
 	frame->priv = priv;
 
 	vbox = GTK_VBOX(gtk_vbox_new(FALSE, 0));

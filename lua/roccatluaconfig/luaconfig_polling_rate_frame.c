@@ -106,6 +106,7 @@ guint luaconfig_polling_rate_frame_get_value(LuaconfigPollingRateFrame *frame) {
 		break;
 	default:
 		g_warn_if_reached();
+		__attribute__ ((fallthrough));
 	case ROCCAT_POLLING_RATE_SELECTOR_NONE:
 		lua_value = LUA_POLLING_RATE_1000;
 		break;

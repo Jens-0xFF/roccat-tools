@@ -37,7 +37,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DG_DISABLE_CAST_CHECKS -DG_
 SET(TRANSLATION_LANGUAGES de en)
 
 SET(ALL_DEVICES
-  arvo 
+  arvo
   isku iskufx
   kiro
   koneplus
@@ -100,7 +100,7 @@ ADD_CUSTOM_TARGET(uninstall
 )
 
 SET(V_MAJOR 5)
-SET(V_MINOR 7)
+SET(V_MINOR 8)
 SET(V_PATCH 0)
 
 ENABLE_TESTING()
@@ -130,7 +130,7 @@ MACRO(add_dbus_bindings name)
     DEPENDS
       ${CMAKE_CURRENT_SOURCE_DIR}/${name}_dbus_services.xml
   )
-  
+
   ADD_CUSTOM_TARGET(${name}_dbus_bindings ALL
     DEPENDS
       ${CMAKE_CURRENT_BINARY_DIR}/${name}_dbus_server_glue.h

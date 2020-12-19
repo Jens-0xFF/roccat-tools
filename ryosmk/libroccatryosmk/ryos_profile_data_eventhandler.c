@@ -148,7 +148,7 @@ void ryos_profile_data_eventhandler_update_with_default(RyosProfileDataEventhand
 	profile_data->notification_volume = 0.0;
 	profile_data->led_volume_indicator = FALSE;
 
-	script = g_build_path("/", RYOS_EFFECT_MODULES_PATH, "ripple.lc", NULL);
+	script = g_build_path("/", RYOS_EFFECT_MODULES_PATH, "ripple.lua", NULL);
 	ryos_profile_data_eventhandler_set_effect_script_name(profile_data, script);
 	g_free(script);
 

@@ -69,10 +69,7 @@ struct _TyonXceleratorCalibrationAssistantPrivate {
 };
 
 #define AVERAGE_SHIFT 7;
-static guint const pixel_size = 4;
 static guint const valid_count = 1 << AVERAGE_SHIFT;
-static guint const valid_range = 10;
-static guint const dead_range = 20;
 
 enum {
 	PHASE_MID = 0,

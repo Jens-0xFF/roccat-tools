@@ -21,7 +21,6 @@
 #include "config.h"
 
 static gchar const * const group_name = "RyosGUI";
-static gchar const * const eventhandler_group_name = "Eventhandler";
 static gchar const * const rkp_path_key = "RkpFilePath";
 static gchar const * const default_profile_number_key = "DefaultProfileNumber";
 static gchar const * const layout_key = "Layout";

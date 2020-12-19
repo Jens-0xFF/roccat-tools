@@ -1,5 +1,5 @@
 Name: roccat
-Version: 5.7.0
+Version: 5.8.0
 Release: 1
 License: GPL
 Source: https://sourceforge.net/projects/roccat/files/roccat-tools/roccat-tools-%{version}.tar.bz2
@@ -680,5 +680,5 @@ gtk-update-icon-cache %{_prefix}/share/icons/hicolor &>dev/null || :
 %{_mandir}/*/man1/roccattyon*
 
 %changelog
-* Tue Jun 13 2017 Stefan Achatz <erazor_de@users.sourceforge.net> 5.7.0-1
+* Fri Mar 29 2019 Stefan Achatz <erazor_de@users.sourceforge.net> 5.8.0-1
 - Initial version

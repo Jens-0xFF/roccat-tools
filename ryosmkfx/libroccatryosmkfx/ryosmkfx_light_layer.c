@@ -133,6 +133,7 @@ static gboolean set_cluster(guint8 const values[RYOSMKFX_LIGHT_LAYER_KEYS_NUM],
 			continue;
 
 		smallest_error = G_MAXUINT32;
+		smallest_cluster = 0;
 		for (color_index = 0; color_index < RYOSMKFX_LIGHT_LAYER_COLORS_NUM; ++color_index) {
 			error = abs((gint)values[key_index] - (gint)means[color_index]);
 			if (error < smallest_error) {

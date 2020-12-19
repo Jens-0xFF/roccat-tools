@@ -68,11 +68,20 @@ gchar const *sova_macro_get_macro_name(SovaMacro const *macro) {
 		return (gchar const *)macro->record.macro_name;
 }
 
+static guint16 sova_macro_calc_checksum(SovaMacro const *macro) {
+	return ROCCAT_BYTESUM_PARTIALLY(macro, SovaMacro, report_id, checksum);
+}
+
+static void sova_macro_set_checksum(SovaMacro *macro, guint16 new_value) {
+	macro->checksum = GUINT16_TO_LE(new_value);
+}
+
 void sova_macro_finalize(SovaMacro *macro, guint profile_index, guint keys_index) {
 	macro->report_id = SOVA_REPORT_ID_MACRO;
 	macro->size = GUINT16_TO_LE(sizeof(SovaMacro));
 	macro->profile_index = profile_index;
 	macro->button_index = keys_index;
+	sova_macro_set_checksum(macro, sova_macro_calc_checksum(macro));
 }
 
 gboolean gaminggear_macro_to_sova_macro(GaminggearMacro const *gaminggear_macro, SovaMacro *sova_macro, GError **error) {
@@ -125,7 +134,7 @@ GaminggearMacro *sova_macro_to_gaminggear_macro(SovaMacro const *sova_macro) {
 
 gboolean sova_macro_equal(SovaMacro const *left, SovaMacro const *right) {
 	gboolean equal;
-	equal = ROCCAT_MEMCMP_PARTIALLY(left, right, SovaMacro, loop, unused);
+	equal = ROCCAT_MEMCMP_PARTIALLY(left, right, SovaMacro, loop, checksum);
 	return equal ? FALSE : TRUE;
 }
 

@@ -51,7 +51,7 @@ static void koneconfig_polling_rate_frame_init(KoneconfigPollingRateFrame *frame
 	frame->priv->selector = ROCCAT_POLLING_RATE_SELECTOR(roccat_polling_rate_selector_new(
 			ROCCAT_POLLING_RATE_SELECTOR_125 | ROCCAT_POLLING_RATE_SELECTOR_500 | ROCCAT_POLLING_RATE_SELECTOR_1000));
 	gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(frame->priv->selector));
-	gtk_frame_set_label(GTK_FRAME(frame), _("Polling rate"));	
+	gtk_frame_set_label(GTK_FRAME(frame), _("Polling rate"));
 }
 
 static void koneconfig_polling_rate_frame_class_init(KoneconfigPollingRateFrameClass *klass) {
@@ -98,6 +98,7 @@ guint koneconfig_polling_rate_frame_get_value(KoneconfigPollingRateFrame *frame)
 		break;
 	default:
 		g_warn_if_reached();
+		__attribute__ ((fallthrough));
 	case ROCCAT_POLLING_RATE_SELECTOR_NONE:
 		rmp_value = KONE_POLLING_RATE_1000;
 		break;

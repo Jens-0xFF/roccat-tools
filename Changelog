@@ -1,3 +1,9 @@
+5.8.0 2019-03-29
+
+ * Improved: Switch to default profile now works if no window is active
+ * Fixed: Sova macro write
+ * Fixed: Sova rkp import
+
 5.7.0 2017-06-13
 
  * Fixed: Firmware updates
@@ -164,7 +170,7 @@
 3.1.0 2015-02-24
 
  * Added: Support for Ryos TKL Pro
- * Fixed: Dbus interface names 
+ * Fixed: Dbus interface names
  * Fixed: Cpi handling for KonePureOptical
  * Fixed: OpenGui now opens right application
  * Fixed: Some typos in error messages and manpages
@@ -273,14 +279,14 @@
 
  * Fixed: KonePure and KonePureOptical macro problems
  * Fixed: Actual profile changing twice when using settings tab
- * Fixed: Multiple device warnings on replug after firmware update 
+ * Fixed: Multiple device warnings on replug after firmware update
  * Improved: Default profile can now be switched off
  * Improved: Sound playback now with per-device configurable volume
  * Improved: Sensitivity change now supports audio notifications
  * Improved: Shortcut dialog allows toggling modifier checkboxes with key press
  * Improved: Profile save dialogs show filename proposition and add extension if needed
  * Changed: Device reset now lives in misc menu
- 
+
 1.2.0 2013-12-28
 
  * Improved: New device scanner with support for future userspace-only implementations
@@ -338,7 +344,7 @@
  * keycode <--> hid translation now works with evdev and nothing else
 
 0.19.0 2013-05-18
- 
+
  * Improved Key ComboBox handling
  * Isku/FX: Easyzone key labels and Standard settings now show layout dependent values
  * Fixed wrong keycode <--> hid translation mechanism
@@ -418,18 +424,18 @@
  * Savu: Added button for device reset
  * Updated talkfx functionality
  * Cleanups and fixes
- 
+
 0.13.1 2012-10-16
 
  * Fixed couple typos and memory leaks
  * Added Lua support
- 
+
 0.13.0 2012-09-30
 
  * Switched from libusb 0.1 to 1.0
  * Updated udev rules to work with hid-generic and generic-usb
  * Updated udev rules to load kernel modules as fallback
- 
+
 0.12.5 2012-08-26
 
  * Added color flow support for Savu
@@ -455,7 +461,7 @@
 
 0.12.1 2012-03-09
 
- * Kone[+]: Fixed an error in calibration assistant when going back 
+ * Kone[+]: Fixed an error in calibration assistant when going back
  * Kova[+], Kone[+]: Added Easywheel Aero Flip 3D button setting
  * Kone[+]: Partially removed easyshift from buttons that don't support it
  * Kova[+]: Removed easyshift from buttons that don't support it
@@ -470,12 +476,12 @@
  * Fixed segfault on Arvo startup
  * Unified abilities of *control applications.
  * *control applications don't support read/write of binary profile data anymore.
- 
+
 0.11.0 2012-01-25
 
  * Replaced libudev with gudev to get rid of threading
  * Fixed "konepluscontrol --actual-profile" returning profile numbers in range 0-4
- 
+
 0.10.1 2012-01-15
 
  * Application doesn't exit/segfault on missing filesystem permissions

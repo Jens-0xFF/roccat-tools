@@ -60,7 +60,7 @@ struct _SovaMacro {
 	};
 	guint16 count;
 	RoccatKeystroke keystrokes[SOVA_MACRO_KEYSTROKES_NUM];
-	guint8 unused[2];
+	guint16 checksum;
 } __attribute__ ((packed));
 
 enum {
