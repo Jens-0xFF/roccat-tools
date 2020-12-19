@@ -18,8 +18,6 @@ TARGET_LINK_LIBRARIES(libroccatkonepurewidget
   ${GAMINGGEAR0_WIDGET_LIBRARY}
 )
 
-TARGET_LINK_LIBRARIES(libroccatkonepurewidget LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatkonepurewidget
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}
@@ -29,4 +27,3 @@ SET_TARGET_PROPERTIES(libroccatkonepurewidget
 )
 
 INSTALL(TARGETS libroccatkonepurewidget DESTINATION ${LIBDIR})
-  

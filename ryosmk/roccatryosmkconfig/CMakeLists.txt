@@ -8,7 +8,6 @@ ADD_EXECUTABLE(roccatryosmkconfig
   ryosconfig_layer_illumination_dialog.c
   ryosconfig_led_feedback_frame.c
   ryosconfig_light_frame.c
-  ryosconfig_notification_frame.c
   ryosconfig_pro_dimness_selector.c
   ryosconfig_profile_page.c
   ryosconfig_window.c

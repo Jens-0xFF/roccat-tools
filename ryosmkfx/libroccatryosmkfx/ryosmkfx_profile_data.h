@@ -28,7 +28,7 @@ typedef struct _RyosmkfxProfileData RyosmkfxProfileData;
 struct _RyosmkfxProfileData {
 	RyosmkfxProfileDataEventhandler eventhandler;
 	RyosmkfxProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 RyosmkfxProfileData *ryosmkfx_profile_data_new(void);
 RyosmkfxProfileData *ryosmkfx_profile_data_dup(RyosmkfxProfileData const *other);

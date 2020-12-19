@@ -88,7 +88,7 @@ static void window_active_page_changed_cb(RoccatConfigWindowPages *roccat_window
 }
 
 static void actual_profile_changed_from_device_cb(DBusGProxy *proxy, guchar profile_number, gpointer user_data) {
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
 }
 
 static void brightness_changed_from_device_cb(DBusGProxy *proxy, guchar profile_number, guchar brightness_number, gpointer user_data) {
@@ -325,12 +325,12 @@ static void add_pages(RyosmkfxconfigWindow *window) {
 			add_page(window, profile_data);
 			g_free(profile_data);
 		}
-		roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(window), ryosmkfx_profile_get_index(profile));
+		roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(window), ryosmkfx_profile_get_index(profile));
 	} else {
 		profile_data = ryosmkfx_profile_data_new();
 		add_page(window, profile_data);
 		g_free(profile_data);
-		roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(window), 0);
+		roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(window), 0);
 	}
 
 	dbus_g_proxy_connect_signal(priv->dbus_proxy, "ProfileChanged", G_CALLBACK(actual_profile_changed_from_device_cb), window, NULL);

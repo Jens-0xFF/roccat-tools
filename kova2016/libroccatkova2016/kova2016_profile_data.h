@@ -28,7 +28,7 @@ typedef struct _Kova2016ProfileData Kova2016ProfileData;
 struct _Kova2016ProfileData {
 	Kova2016ProfileDataEventhandler eventhandler;
 	Kova2016ProfileDataHardware hardware;
-} __attribute__ ((packed));
+};
 
 Kova2016ProfileData *kova2016_profile_data_new(void);
 Kova2016ProfileData *kova2016_profile_data_dup(Kova2016ProfileData const *other);

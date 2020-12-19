@@ -25,8 +25,6 @@ TARGET_LINK_LIBRARIES(libroccatkonepuremilitary
   ${GLIB2_LIBRARIES}
 )
 
-TARGET_LINK_LIBRARIES(libroccatkonepuremilitary LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatkonepuremilitary
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}

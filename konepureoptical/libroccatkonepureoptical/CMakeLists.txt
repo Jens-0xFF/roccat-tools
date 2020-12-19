@@ -24,8 +24,6 @@ TARGET_LINK_LIBRARIES(libroccatkonepureoptical
   ${GLIB2_LIBRARIES}
 )
 
-TARGET_LINK_LIBRARIES(libroccatkonepureoptical LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatkonepureoptical
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}

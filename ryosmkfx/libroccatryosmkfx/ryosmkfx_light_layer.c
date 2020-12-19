@@ -113,6 +113,9 @@ static void init_means(guint8 const values[RYOSMKFX_LIGHT_LAYER_KEYS_NUM],
 	for (color_index = 0; color_index < MIN(length, RYOSMKFX_LIGHT_LAYER_COLORS_NUM); ++color_index) {
 		means[color_index] = GPOINTER_TO_UINT(g_list_nth_data(unique_values, color_index));
 	}
+	for (color_index = MIN(length, RYOSMKFX_LIGHT_LAYER_COLORS_NUM); color_index < RYOSMKFX_LIGHT_LAYER_COLORS_NUM; ++color_index) {
+		means[color_index] = 0;
+	}
 
 	g_list_free(unique_values);
 }

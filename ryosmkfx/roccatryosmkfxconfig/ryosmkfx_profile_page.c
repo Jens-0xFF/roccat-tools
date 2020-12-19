@@ -21,6 +21,7 @@
 #include "ryosmkfx_light_frame.h"
 #include "ryosmkfx_light_effects_frame.h"
 #include "ryos_key_mask_selector.h"
+#include "ryos_notification_frame.h"
 #include "roccat_gamefile_selector.h"
 #include "g_cclosure_roccat_marshaller.h"
 #include "i18n.h"
@@ -47,6 +48,7 @@ struct _RyosmkfxProfilePagePrivate {
 	RoccatGamefileSelector *gamefiles;
 	RyosmkfxKeyboardSelector *keyboard_selector;
 	RyosKeyMaskSelector *key_mask_selector;
+	RyosNotificationFrame *notification_frame;
 	RyosmkfxLedFeedbackFrame *feedback_frame;
 	RyosmkfxLightFrame *light_frame;
 	RyosmkfxLightEffectsFrame *light_effects_frame;
@@ -65,6 +67,13 @@ GtkWidget *ryosmkfx_profile_page_new(void) {
 	return GTK_WIDGET(g_object_new(RYOSMKFX_PROFILE_PAGE_TYPE, NULL));
 }
 
+static void ryos_notification_frame_set_from_profile_data(RyosNotificationFrame *notification_frame, RyosmkfxProfileData const *profile_data) {
+	ryos_notification_frame_set_timer_type(notification_frame, profile_data->eventhandler.timer_notification_type);
+	ryos_notification_frame_set_profile_type(notification_frame, profile_data->eventhandler.profile_notification_type);
+	ryos_notification_frame_set_live_recording_type(notification_frame, profile_data->eventhandler.live_recording_notification_type);
+	ryos_notification_frame_set_volume(notification_frame, profile_data->eventhandler.notification_volume);
+}
+
 static void set_from_profile_data(RyosmkfxProfilePage *profile_page, RoccatKeyFile *config) {
 	RyosmkfxProfilePagePrivate *priv = profile_page->priv;
 	guint i;
@@ -75,9 +84,39 @@ static void set_from_profile_data(RyosmkfxProfilePage *profile_page, RoccatKeyFi
 	ryosmkfx_light_frame_set_from_profile_data(priv->light_frame, priv->profile_data);
 	ryosmkfx_light_effects_frame_set_from_profile_data(priv->light_effects_frame, priv->profile_data, config);
 	ryos_key_mask_selector_set_mask(priv->key_mask_selector, priv->profile_data->hardware.key_mask.mask);
+	ryos_notification_frame_set_from_profile_data(priv->notification_frame, priv->profile_data);
 
 	for (i = 0; i < ROCCAT_SWARM_RMP_GAMEFILE_NUM; ++i)
 		roccat_gamefile_selector_set_text(priv->gamefiles, i, priv->profile_data->eventhandler.gamefile_names[i]);
+}
+
+static void ryos_notification_frame_update_profile_data(RyosNotificationFrame *notification_frame, RyosmkfxProfileData *profile_data) {
+	guint8 int_val;
+	gdouble double_val;
+
+	int_val = ryos_notification_frame_get_timer_type(notification_frame);
+	if (int_val != profile_data->eventhandler.timer_notification_type) {
+		profile_data->eventhandler.timer_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	int_val = ryos_notification_frame_get_profile_type(notification_frame);
+	if (int_val != profile_data->eventhandler.profile_notification_type) {
+		profile_data->eventhandler.profile_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	int_val = ryos_notification_frame_get_live_recording_type(notification_frame);
+	if (int_val != profile_data->eventhandler.live_recording_notification_type) {
+		profile_data->eventhandler.live_recording_notification_type = int_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
+
+	double_val = ryos_notification_frame_get_volume(notification_frame);
+	if (double_val != profile_data->eventhandler.notification_volume) {
+		profile_data->eventhandler.notification_volume = double_val;
+		profile_data->eventhandler.modified = TRUE;
+	}
 }
 
 static void update_profile_data(RyosmkfxProfilePage *profile_page, RyosmkfxProfileData *profile_data, RoccatKeyFile *config) {
@@ -94,6 +133,7 @@ static void update_profile_data(RyosmkfxProfilePage *profile_page, RyosmkfxProfi
 	ryosmkfx_led_feedback_frame_update_profile_data(priv->feedback_frame, profile_data);
 	ryosmkfx_light_frame_update_profile_data(priv->light_frame, profile_data);
 	ryosmkfx_light_effects_frame_update_profile_data(priv->light_effects_frame, profile_data, config);
+	ryos_notification_frame_update_profile_data(priv->notification_frame, profile_data);
 
 	key_mask.mask = ryos_key_mask_selector_get_mask(priv->key_mask_selector);
 	ryosmkfx_profile_data_hardware_set_key_mask(&profile_data->hardware, &key_mask);
@@ -142,27 +182,33 @@ static void light_speed_changed_cb(RyosmkfxLightEffectsFrame *effects_frame, gpo
 static void append_misc_page(RyosmkfxProfilePage *profile_page, GtkNotebook *notebook) {
 	RyosmkfxProfilePagePrivate *priv = profile_page->priv;
 	GtkWidget *hbox;
-	GtkWidget *vbox;
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
 
 	hbox = gtk_hbox_new(FALSE, 0);
-	vbox = gtk_vbox_new(FALSE, 0);
+	vbox1 = gtk_vbox_new(FALSE, 0);
+	vbox2 = gtk_vbox_new(FALSE, 0);
 	priv->misc_box = GTK_BOX(gtk_vbox_new(FALSE, 0));
 	priv->gamefiles = ROCCAT_GAMEFILE_SELECTOR(roccat_gamefile_selector_new(ROCCAT_SWARM_RMP_GAMEFILE_NUM));
 	priv->key_mask_selector = RYOS_KEY_MASK_SELECTOR(ryos_key_mask_selector_new());
 	priv->feedback_frame = RYOSMKFX_LED_FEEDBACK_FRAME(ryosmkfx_led_feedback_frame_new());
 	priv->light_frame = RYOSMKFX_LIGHT_FRAME(ryosmkfx_light_frame_new());
 	priv->light_effects_frame = RYOSMKFX_LIGHT_EFFECTS_FRAME(ryosmkfx_light_effects_frame_new());
+	priv->notification_frame = RYOS_NOTIFICATION_FRAME(ryos_notification_frame_new());
 
 	g_signal_connect(G_OBJECT(priv->light_effects_frame), "effect-changed", G_CALLBACK(light_effect_changed_cb), profile_page);
 	g_signal_connect(G_OBJECT(priv->light_effects_frame), "script-changed", G_CALLBACK(light_script_changed_cb), profile_page);
 	g_signal_connect(G_OBJECT(priv->light_effects_frame), "speed-changed", G_CALLBACK(light_speed_changed_cb), profile_page);
 
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->feedback_frame), TRUE, TRUE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(priv->light_frame), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(priv->key_mask_selector), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), GTK_WIDGET(priv->notification_frame), TRUE, TRUE, 0);
 
-	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->key_mask_selector), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox1), GTK_WIDGET(priv->feedback_frame), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox1), GTK_WIDGET(priv->light_frame), TRUE, TRUE, 0);
+
+	gtk_box_pack_start(GTK_BOX(hbox), vbox2, TRUE, TRUE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(priv->light_effects_frame), TRUE, TRUE, 0);
-	gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), vbox1, TRUE, TRUE, 0);
 
 	gtk_box_pack_start(priv->misc_box, hbox, TRUE, TRUE, 0);
 	gtk_box_pack_start(priv->misc_box, GTK_WIDGET(priv->gamefiles), TRUE, TRUE, 0);

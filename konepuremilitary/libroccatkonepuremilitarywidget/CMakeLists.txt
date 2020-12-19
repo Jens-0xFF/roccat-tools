@@ -20,8 +20,6 @@ TARGET_LINK_LIBRARIES(libroccatkonepuremilitarywidget
   ${GTK_LIBRARIES}
 )
 
-TARGET_LINK_LIBRARIES(libroccatkonepuremilitarywidget LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatkonepuremilitarywidget
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}

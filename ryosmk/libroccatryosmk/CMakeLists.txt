@@ -60,8 +60,6 @@ ADD_DEPENDENCIES(libroccatryosmk
 
 TARGET_LINK_LIBRARIES(libroccatryosmk ${LIBS})
 
-TARGET_LINK_LIBRARIES(libroccatryosmk LINK_INTERFACE_LIBRARIES)
-
 SET_TARGET_PROPERTIES(libroccatryosmk
   PROPERTIES
     VERSION ${V_MAJOR}.${V_MINOR}.${V_PATCH}
@@ -71,4 +69,3 @@ SET_TARGET_PROPERTIES(libroccatryosmk
 )
 
 INSTALL(TARGETS libroccatryosmk DESTINATION ${LIBDIR})
-  

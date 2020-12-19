@@ -1,3 +1,14 @@
+5.9.0 2019-04-13
+
+ * Improved: Lua (the language) finder now handles version and release numbers
+ * Improved: Specfile
+ * Improved: RyosMKFX better gamma correction
+ * Added: RyosMKFX notification settings
+ * Fixed: RyosMKFX false modified profiles leading to unnecessary writes
+ * Fixed: Sova & Skeltr add new profile lost settings
+ * Fixed: Sova open application opened driver instead
+ * Fixed: Double audio notification on profile change when configuration GUI is running
+
 5.8.0 2019-03-29
 
  * Improved: Switch to default profile now works if no window is active

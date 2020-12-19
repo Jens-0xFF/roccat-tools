@@ -86,7 +86,7 @@ static void window_active_page_changed_cb(RoccatConfigWindowPages *roccat_window
 }
 
 static void actual_profile_changed_from_device_cb(DBusGProxy *proxy, guchar profile_number, gpointer user_data) {
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(user_data), profile_number - 1);
 }
 
 static void brightness_changed_from_device_cb(DBusGProxy *proxy, guchar profile_number, guchar brightness_number, gpointer user_data) {
@@ -144,14 +144,14 @@ static void device_add_cb(RoccatConfigWindow *roccat_window, gpointer user_data)
 		default:
 			break;
 		}
-		
+
 		g_free(profile_data);
 	}
 
 	actual_profile_index = ryos_profile_read(device, &local_error);
 	if (!roccat_handle_error_dialog(GTK_WINDOW(window), _("Could not read actual profile"), &local_error))
 		return;
-	roccat_config_window_pages_set_active_page(ROCCAT_CONFIG_WINDOW_PAGES(roccat_window), actual_profile_index);
+	roccat_config_window_pages_set_active_page_blocked(ROCCAT_CONFIG_WINDOW_PAGES(roccat_window), actual_profile_index);
 
 	dbus_g_proxy_connect_signal(priv->dbus_proxy, "ProfileChanged", G_CALLBACK(actual_profile_changed_from_device_cb), window, NULL);
 	dbus_g_proxy_connect_signal(priv->dbus_proxy, "BrightnessChanged", G_CALLBACK(brightness_changed_from_device_cb), window, NULL);
@@ -163,7 +163,7 @@ static void device_remove_cb(RoccatConfigWindow *roccat_window, gpointer user_da
 	RyosconfigWindowPrivate *priv = window->priv;
 
 	ryosconfig_blink_stop(priv->blink);
-	
+
 	dbus_g_proxy_disconnect_signal(priv->dbus_proxy, "ProfileChanged", G_CALLBACK(actual_profile_changed_from_device_cb), window);
 	dbus_g_proxy_disconnect_signal(priv->dbus_proxy, "BrightnessChanged", G_CALLBACK(brightness_changed_from_device_cb), window);
 	dbus_g_proxy_disconnect_signal(priv->dbus_proxy, "MacroChanged", G_CALLBACK(macro_changed_from_device_cb), window);
@@ -558,7 +558,7 @@ static GObject *constructor(GType gtype, guint n_properties, GObjectConstructPar
 	}
 
 	set_keyboard_layout(window, ryos_configuration_get_layout(priv->config));
-	
+
 	menu_item = GTK_MENU_ITEM(gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES, NULL));
 	g_signal_connect(G_OBJECT(menu_item), "activate", G_CALLBACK(menu_edit_preferences_cb), window);
 	roccat_config_window_edit_menu_append(roccat_window, menu_item);

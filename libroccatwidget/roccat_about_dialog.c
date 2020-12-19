@@ -26,7 +26,7 @@ void roccat_about_dialog(GtkWindow *parent, gchar const *program_name, gchar con
 	gtk_show_about_dialog(parent,
 			"authors", authors,
 			"comments", comments,
-			"copyright", "Copyright \302\251 2009-2017 Stefan Achatz",
+			"copyright", "Copyright \302\251 2009-2019 Stefan Achatz",
 			"license", "GPL 2 (GNU General Public License)\n\nsee http://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
 			"logo-icon-name", "roccat",
 			"modal", TRUE,
